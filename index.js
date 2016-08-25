@@ -17,17 +17,32 @@ function createScene(mesh) {
 
   console.log(complex);
 
-  var mesh = new THREE.Mesh(complex, new THREE.MeshBasicMaterial({ 
-    wireframe: true, 
+  // 412.3,160 461,154.7 459,166.2
+  var triangleGeometry = new THREE.Geometry();
+  triangleGeometry.vertices.push(new THREE.Vector3(412.3, 160, 0));
+  triangleGeometry.vertices.push(new THREE.Vector3(461, 154.7, 0));
+  triangleGeometry.vertices.push(new THREE.Vector3(459, 166.2, 0));
+  triangleGeometry.faces.push(new THREE.Face3(0, 1, 2));
+
+  var triangleMesh = new THREE.Mesh(triangleGeometry, new THREE.MeshBasicMaterial({
+    wireframe: true,
+    transparent: true,
+    opacity: 1,
+    color: 0x2a2a2c
+  }));
+  triangleMesh.position.set(0, 0.0, 0);
+  scene.add(triangleMesh);
+
+  var mesh = new THREE.Mesh(complex, new THREE.MeshBasicMaterial({
+    wireframe: true,
     transparent: true,
     opacity: 1
   }));
 
-  mesh.position.z = 3.5;
+  camera.position.z = 300;
+  camera.position.x = 500;
 
-  camera.position.z = 5;
-
-  scene.add(mesh);
+  // scene.add(mesh);
 
   function render() {
     requestAnimationFrame( render );
@@ -37,7 +52,7 @@ function createScene(mesh) {
   render();
 }
 
-loadSvg('svg/peg-circle.svg', function (err, svg) {
+loadSvg('svg/face.svg', function (err, svg) {
   if (err) throw err
 
   var svgPath = parsePath(svg);
