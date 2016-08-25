@@ -8,9 +8,9 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 var renderer = new THREE.WebGLRenderer();
 
-camera.position.z = 900;
-camera.position.x = 100;
-camera.position.y = 500;
+camera.position.z = 1000;
+camera.position.x = 0;
+camera.position.y = 0;
 
 renderer.setSize( window.innerWidth, window.innerHeight );
 
@@ -30,9 +30,6 @@ loadSvg('svg/face2.svg', function (err, svg) {
                     return parseFloat(e);
                   });
     var color = new THREE.Color(poly.getAttribute('fill'));
-
-    console.log(numbers);
-
     var geo = new THREE.Geometry();
 
       while(numbers.length != 0) {
