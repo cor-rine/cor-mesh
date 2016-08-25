@@ -4,4 +4,4 @@ Musing inspired by [Matt DesLauriers's SVG 3D Mesg](http://mattdesl.github.io/sv
 
 ### Installation for local development
 
-Clone this repo, `npm install` followed by `node run start`, and then visit [http://10.0.0.2:9966/](http://10.0.0.2:9966/).  Simple.
+Clone this repo, `npm install` followed by `npm run start`, and then visit [http://10.0.0.2:9966/](http://10.0.0.2:9966/).  Simple.
