@@ -1,6 +1,5 @@
 var loadSvg = require('load-svg');
 var parsePath = require('extract-svg-path').parse;
-var svgMesh3d = require('svg-mesh-3d');
 
 var THREE = require('three');
 var Complex = require('three-simplicial-complex')(THREE);
@@ -16,41 +15,6 @@ camera.position.y = 500;
 renderer.setSize( window.innerWidth, window.innerHeight );
 
 document.body.appendChild( renderer.domElement );
-
-function drawTriangle() {
-  // 412.3,160 461,154.7 459,166.2
-  var triangleGeometry = new THREE.Geometry();
-  triangleGeometry.vertices.push(new THREE.Vector3(412.3, 160, 0));
-  triangleGeometry.vertices.push(new THREE.Vector3(461, 154.7, 0));
-  triangleGeometry.vertices.push(new THREE.Vector3(459, 166.2, 0));
-  triangleGeometry.faces.push(new THREE.Face3(0, 2, 1));
-
-  var triangleMesh = new THREE.Mesh(triangleGeometry, new THREE.MeshBasicMaterial({
-    transparent: true,
-    opacity: 1,
-    side: THREE.DoubleSide,
-    color: 0xffffff
-  }));
-  triangleMesh.position.set(0, 0.0, 0);
-  scene.add(triangleMesh);
-}
-
-
-function createScene(mesh) {
-
-  // drawTriangle(scene);
-  // var mesh = new THREE.Mesh(complex, new THREE.MeshBasicMaterial({
-  //   // wireframe: true,
-  //   transparent: true,
-  //   side:THREE.DoubleSide,
-  //   opacity: 1,
-  //   color: Math.floor(Math.random()*0xffffff)
-  // }));
-}
-/*
-
-get the SVG as an XML document
-*/
 
 
 loadSvg('svg/face2.svg', function (err, svg) {
@@ -86,8 +50,6 @@ loadSvg('svg/face2.svg', function (err, svg) {
 
     mesh.position.set(0, 0, 0);
     scene.add(mesh);
-
-    drawTriangle();
   }
 });
 

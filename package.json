@@ -11,7 +11,6 @@
   "dependencies": {
     "extract-svg-path": "^2.1.0",
     "load-svg": "^1.0.0",
-    "svg-mesh-3d": "^1.1.0",
     "three": "^0.80.1",
     "three-simplicial-complex": "^69.0.6"
   }
