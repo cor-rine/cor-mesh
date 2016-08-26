@@ -10,9 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "budo": "^9.0.0",
+    "canvas-loop": "^1.0.7",
     "extract-svg-path": "^2.1.0",
     "load-svg": "^1.0.0",
     "three": "^0.80.1",
-    "three-simplicial-complex": "^69.0.6"
+    "three-simplicial-complex": "^69.0.6",
+    "tweenr": "^2.1.4"
   }
 }
