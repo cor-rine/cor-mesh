@@ -9,7 +9,7 @@ var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHei
 var renderer = new THREE.WebGLRenderer();
 
 camera.position.z = 900;
-camera.position.x = -400;
+camera.position.x = 400;
 camera.position.y = -400;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -41,7 +41,7 @@ loadSvg('svg/face.svg', function (err, svg) {
     var geo = new THREE.Geometry();
 
     while(numbers.length != 0) {
-      geo.vertices.push(new THREE.Vector3(-numbers.shift(), -numbers.shift(), 0));
+      geo.vertices.push(new THREE.Vector3(numbers.shift(), -numbers.shift(), 0));
     }
     geo.faces.push(new THREE.Face3(0, 2, 1));
 
