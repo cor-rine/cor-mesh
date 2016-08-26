@@ -39,7 +39,8 @@ loadSvg('svg/face3.svg', function (err, svg) {
                   .map(function(e){
                     return parseFloat(e);
                   });
-    var color = poly.style;
+    console.log(poly);
+    var color = window.getComputedStyle(poly);
     var geo = new THREE.Geometry();
 
     console.log(color);
