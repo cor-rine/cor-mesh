@@ -8,7 +8,7 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 var renderer = new THREE.WebGLRenderer();
 
-camera.position.z = 900;
+camera.position.z = 500;
 camera.position.x = 400;
 camera.position.y = -400;
 
@@ -30,7 +30,8 @@ loadSvg('svg/face.svg', function (err, svg) {
   if (err) throw err
 
   var polygons = svg.querySelectorAll('polygon');
-  for(var i =0;i< polygons.length;i++){
+
+  for (var i = 0 ; i < polygons.length ; i++) {
     var poly = polygons[i];
     var numbers = poly.getAttribute('points')
                   .split(' ')
