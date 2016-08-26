@@ -18,6 +18,8 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 document.body.appendChild(renderer.domElement);
 
+var canvas = document.querySelector('canvas');
+
 
 loadSvg('svg/face.svg', function (err, svg) {
   if (err) throw err
@@ -57,4 +59,18 @@ function render() {
   renderer.render(scene, camera);
 }
 
-render();
+var app = CanvasLoop(canvas, { scale: renderer.devicePixelRatio })
+    .start()
+    .on('tick', render)
+    .on('resize', function() {
+      resize();
+    });
+
+function resize() {
+  var width = app.shape[0];
+  var height = app.shape[1];
+  camera.aspect = width / height;
+  renderer.setSize(width, height, false);
+  camera.updateProjectionMatrix();
+  render();
+}
