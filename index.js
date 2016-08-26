@@ -1,12 +1,14 @@
 var loadSvg = require('load-svg');
 var parsePath = require('extract-svg-path').parse;
-
 var THREE = require('three');
 var Complex = require('three-simplicial-complex')(THREE);
+var Tweenr = require('tweenr');
+var CanvasLoop = require('canvas-loop');
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 var renderer = new THREE.WebGLRenderer();
+var tweenr = Tweenr({ defaultEase: 'expoOut' });
 
 camera.position.z = 500;
 camera.position.x = 400;
@@ -15,15 +17,6 @@ camera.position.y = -400;
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 document.body.appendChild(renderer.domElement);
-
-// document.addEventListener('mousedown', function(event) {
-//   console.log(event);
-//   console.log(this);
-// });
-
-document.mousedown = function(event) {
-  console.log(event);
-}
 
 
 loadSvg('svg/face.svg', function (err, svg) {
@@ -60,8 +53,8 @@ loadSvg('svg/face.svg', function (err, svg) {
 });
 
 function render() {
-  requestAnimationFrame( render );
-  renderer.render( scene, camera );
+  requestAnimationFrame(render);
+  renderer.render(scene, camera);
 }
 
 render();
