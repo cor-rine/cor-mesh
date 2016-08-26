@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "budo index.js:bundle.js --live"
+    "start": "./node_modules/budo/bin/cmd.js index.js:bundle.js --live"
   },
   "author": "Corrine Toracchio",
   "license": "ISC",
   "dependencies": {
+    "budo": "^9.0.0",
     "extract-svg-path": "^2.1.0",
     "load-svg": "^1.0.0",
     "three": "^0.80.1",
