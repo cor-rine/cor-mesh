@@ -75,6 +75,7 @@ loadSvg('svg/face.svg', function (err, svg) {
     // }, false);
 
     mesh.position.set(Math.random()*60, -Math.random()*100, -Math.random()*2000);
+    mesh.rotation.set(1, 1, 0);
     scene.add(mesh);
 
     tweenr.to(mesh.position, {
@@ -83,6 +84,13 @@ loadSvg('svg/face.svg', function (err, svg) {
       x: 0,
       duration: Math.random()*1.5,
       delay: Math.random()*1.5
+    });
+    tweenr.to(mesh.rotation, {
+      z: 0,
+      y: 0,
+      x: 0,
+      duration: Math.random()*1.5,
+      delay: Math.random()*1
     });
   }
 });
