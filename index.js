@@ -4,11 +4,19 @@ var THREE = require('three');
 var Complex = require('three-simplicial-complex')(THREE);
 var Tweenr = require('tweenr');
 var CanvasLoop = require('canvas-loop');
+var initializeDomEvents = require('threex-domevents')
+var THREEx = {};
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-var renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.WebGLRenderer({
+  precision: 'highp',
+  antialias: true
+});
 var tweenr = Tweenr({ defaultEase: 'expoOut' });
+
+
+initializeDomEvents(THREE, THREEx);
 
 camera.position.z = 500;
 camera.position.x = 400;
@@ -19,7 +27,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 var canvas = document.querySelector('canvas');
-
+var domEvents = new THREEx.DomEvents(camera, renderer.domElement);
 
 loadSvg('svg/face.svg', function (err, svg) {
   if (err) throw err
@@ -48,6 +56,23 @@ loadSvg('svg/face.svg', function (err, svg) {
       side:THREE.DoubleSide,
       color: color
     }));
+
+    var hoverMaterial = new THREE.MeshBasicMaterial({
+      opacity: 0.5,
+    });
+
+    domEvents.addEventListener(mesh, 'mouseover', function(event) {
+      event.target.material.opacity = 0.4;
+    }, false);
+
+    domEvents.addEventListener(mesh, 'mouseout', function(event) {
+      event.target.material.opacity = 1;
+    }, false);
+
+    domEvents.addEventListener(mesh, 'click', function(event) {
+      event.target.rotation.x += 0.1;
+      event.target.rotation.y += 0.3;
+    }, false);
 
     mesh.position.set(0, 0, 0);
     scene.add(mesh);

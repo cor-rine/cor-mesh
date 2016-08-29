@@ -15,6 +15,7 @@
     "load-svg": "^1.0.0",
     "three": "^0.80.1",
     "three-simplicial-complex": "^69.0.6",
+    "threex-domevents": "^1.0.0",
     "tweenr": "^2.1.4"
   }
 }
