@@ -58,7 +58,7 @@ loadSvg('svg/face.svg', function (err, svg) {
     }));
 
     domEvents.addEventListener(mesh, 'mouseover', function(event) {
-      console.log(event.target);
+      // console.log(event.target);
       event.target.material.currentColor = event.target.material.color;
       event.target.material.color = new THREE.Color(40, 5, 0);
       event.target.material.opacity = 0.4;
@@ -74,7 +74,7 @@ loadSvg('svg/face.svg', function (err, svg) {
     //   event.target.rotation.y += 0.3;
     // }, false);
 
-    mesh.position.set(Math.random()*100, -Math.random()*60, -Math.random()*1000);
+    mesh.position.set(Math.random()*60, -Math.random()*100, -Math.random()*2000);
     scene.add(mesh);
 
     tweenr.to(mesh.position, {
@@ -82,7 +82,7 @@ loadSvg('svg/face.svg', function (err, svg) {
       y: 0,
       x: 0,
       duration: 1,
-      delay: 0.25
+      delay: Math.random()*1.5
     });
   }
 });
@@ -113,6 +113,10 @@ function render() {
   renderer.render(scene, camera);
 }
 
+function renderOnce() {
+  renderer.render(scene, camera);
+}
+
 var app = CanvasLoop(canvas, { scale: renderer.devicePixelRatio })
     .start()
     .on('resize', function() {
@@ -125,7 +129,7 @@ function resize() {
   camera.aspect = width / height;
   renderer.setSize(width, height, false);
   camera.updateProjectionMatrix();
-  render();
+  renderOnce();
 }
 
 render();
