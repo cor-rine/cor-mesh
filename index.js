@@ -81,7 +81,7 @@ loadSvg('svg/face.svg', function (err, svg) {
       z: 0,
       y: 0,
       x: 0,
-      duration: 1,
+      duration: Math.random()*1.5,
       delay: Math.random()*1.5
     });
   }
