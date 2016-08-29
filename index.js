@@ -58,6 +58,7 @@ loadSvg('svg/face.svg', function (err, svg) {
     }));
 
     domEvents.addEventListener(mesh, 'mouseover', function(event) {
+      console.log(event.target);
       event.target.material.currentColor = event.target.material.color;
       event.target.material.color = new THREE.Color(40, 5, 0);
       event.target.material.opacity = 0.4;
@@ -68,15 +69,44 @@ loadSvg('svg/face.svg', function (err, svg) {
       event.target.material.color = event.target.material.currentColor;
     }, false);
 
-    domEvents.addEventListener(mesh, 'click', function(event) {
-      event.target.rotation.x += 0.1;
-      event.target.rotation.y += 0.3;
-    }, false);
+    // domEvents.addEventListener(mesh, 'click', function(event) {
+    //   event.target.rotation.x += 0.1;
+    //   event.target.rotation.y += 0.3;
+    // }, false);
 
-    mesh.position.set(0, 0, 0);
+    mesh.position.set(Math.random()*100, -Math.random()*60, -Math.random()*1000);
     scene.add(mesh);
+
+    tweenr.to(mesh.position, {
+      z: 0,
+      y: 0,
+      x: 0,
+      duration: 1,
+      delay: 0.25
+    });
   }
 });
+
+function debouce(func, wait, immediate){
+  var timeout;
+
+  return function() {
+    var context = this;
+    var args = arguments;
+
+    var later = function() {
+      timeout = null;
+
+      if(!immediate) func.apple(context, args);
+    };
+
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+
+    timeout= setTimeout(later, wait);
+    if(callNow) func.apple(context, args);
+  };
+}
 
 function render() {
   requestAnimationFrame(render);
