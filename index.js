@@ -115,7 +115,6 @@ function render() {
 
 var app = CanvasLoop(canvas, { scale: renderer.devicePixelRatio })
     .start()
-    .on('tick', render)
     .on('resize', function() {
       resize();
     });
@@ -128,3 +127,5 @@ function resize() {
   camera.updateProjectionMatrix();
   render();
 }
+
+render();
