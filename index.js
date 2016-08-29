@@ -10,7 +10,7 @@ var THREEx = {};
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 var renderer = new THREE.WebGLRenderer({
-  precision: 'highp',
+  precision: 'lowp',
   antialias: true
 });
 var tweenr = Tweenr({ defaultEase: 'expoOut' });
@@ -57,16 +57,15 @@ loadSvg('svg/face.svg', function (err, svg) {
       color: color
     }));
 
-    var hoverMaterial = new THREE.MeshBasicMaterial({
-      opacity: 0.5,
-    });
-
     domEvents.addEventListener(mesh, 'mouseover', function(event) {
+      event.target.material.currentColor = event.target.material.color;
+      event.target.material.color = new THREE.Color(40, 5, 0);
       event.target.material.opacity = 0.4;
     }, false);
 
     domEvents.addEventListener(mesh, 'mouseout', function(event) {
       event.target.material.opacity = 1;
+      event.target.material.color = event.target.material.currentColor;
     }, false);
 
     domEvents.addEventListener(mesh, 'click', function(event) {
