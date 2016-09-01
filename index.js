@@ -20,8 +20,8 @@ var tweenr = Tweenr({ defaultEase: 'expoOut' });
 initializeDomEvents(THREE, THREEx);
 
 camera.position.z = 500;
-camera.position.x = 400;
-camera.position.y = -400;
+camera.position.x = innerWidth / 3;
+camera.position.y = -innerHeight / 2;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 
