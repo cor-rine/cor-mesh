@@ -9,6 +9,7 @@
   "author": "Corrine Toracchio",
   "license": "ISC",
   "dependencies": {
+    "ajax-request": "^1.2.1",
     "budo": "^9.0.0",
     "canvas-loop": "^1.0.7",
     "extract-svg-path": "^2.1.0",
