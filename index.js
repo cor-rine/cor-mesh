@@ -114,13 +114,13 @@ function loadSVG() {
 				color: color
 			});
 
-			var mesh = new THREE.Mesh(geo, basicMaterial);
+			var mesh = new THREE.Mesh(geo, material);
 
-			mesh.position.set(0, 0, 0);
-			mesh.rotation.set(0, 0, 0);
+			// mesh.position.set(0, 0, 0);
+			// mesh.rotation.set(0, 0, 0);
 
-			// mesh.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
-			// mesh.rotation.set(1, 1, 0);
+			mesh.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
+			mesh.rotation.set(1, 1, 0);
 			scene.add(mesh);
 
 			domEvents.addEventListener(mesh, 'mouseover', function(event) {
