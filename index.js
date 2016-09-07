@@ -38,7 +38,6 @@ ajax({
 	url: '/glsl/frag.frag',
 	method: 'GET'
 	}, function(err, res, body) {
-	console.log('loaded fragShader');
 	fragShader = body;
 });
 
@@ -46,22 +45,19 @@ ajax({
 	url: '/glsl/movement.glsl',
 	method: 'GET'
 	}, function(err, res, body) {
-	console.log('loaded vertexShader');
 	vertexShader = body;
 	loadSVG();
 });
 
 var mousePosition = new THREE.Vector2();
 
-
-
 document.body.addEventListener('mousemove', function(event) {
-  // console.log(event.target);
-  // event.target.material.currentColor = event.target.material.color;
-  // event.target.material.color = new THREE.Color(40, 5, 0);
-  // event.target.material.opacity = 0.4;
-  mousePosition.x = event.clientX;
-  mousePosition.y = event.clientY;
+	// console.log(event.target);
+	// event.target.material.currentColor = event.target.material.color;
+	// event.target.material.color = new THREE.Color(40, 5, 0);
+	// event.target.material.opacity = 0.4;
+	mousePosition.x = event.clientX;
+	mousePosition.y = event.clientY;
 }, false);
 
 // domEvents.addEventListener(mesh, 'mouseout', function(event) {
@@ -72,126 +68,145 @@ document.body.addEventListener('mousemove', function(event) {
 
 function loadSVG() {
 	loadSvg('svg/face.svg', function (err, svg) {
-	  if (err) throw err
+		if (err) throw err
 
-	  var polygons = svg.querySelectorAll('polygon');
+		var polygons = svg.querySelectorAll('polygon');
 
-	  for (var i = 0 ; i < polygons.length ; i++) {
-	    var poly = polygons[i];
-	    var numbers = poly.getAttribute('points')
-	                  .split(' ')
-	                  .map(function(e){
-	                    return parseFloat(e);
-	                  });
-	    var color = poly.getAttribute('fill');
-	    var geo = new THREE.Geometry();
+		for (var i = 0 ; i < polygons.length ; i++) {
+			var poly = polygons[i];
+			var numbers = poly.getAttribute('points')
+						.split(' ')
+						.map(function(e){
+							return parseFloat(e);
+						});
+			var color = poly.getAttribute('fill');
+			var geo = new THREE.Geometry();
 
-	    while(numbers.length != 0) {
-	      geo.vertices.push(new THREE.Vector3(numbers.shift(), -numbers.shift(), 0));
-	    }
-	    geo.faces.push(new THREE.Face3(0, 2, 1));
+			while(numbers.length != 0) {
+				geo.vertices.push(new THREE.Vector3(numbers.shift(), -numbers.shift(), 0));
+			}
+			geo.faces.push(new THREE.Face3(0, 2, 1));
 
-	    var sampleColor = new THREE.Color(color);
+			var sampleColor = new THREE.Color(color);
 
-	    var material = new THREE.ShaderMaterial({
-	    	// color: color,
-	    	side: THREE.DoubleSide,
-	    	vertexShader: vertexShader,
-	    	fragmentShader: fragShader,
-	    	uniforms: {
-	    		color: {
-	    			type: "v3",
-	    			value: new THREE.Vector3(sampleColor.r, sampleColor.g, sampleColor.b)
-	    		},
-	    		mouse_position: {
-	    			type: "v2",
-	    			value: mousePosition
-	    		}
-	    	},
-	    	// wireframe: wireframe,
-	    	transparent: true
-	    });
+			var material = new THREE.ShaderMaterial({
+				side: THREE.DoubleSide,
+				vertexShader: vertexShader,
+				fragmentShader: fragShader,
+				uniforms: {
+					color: {
+						type: "v3",
+						value: new THREE.Vector3(sampleColor.r, sampleColor.g, sampleColor.b)
+					},
+					mouse_position: {
+						type: "v2",
+						value: mousePosition
+					}
+				},
+				transparent: true
+			});
 
-	    var basicMaterial = new THREE.MeshBasicMaterial({
-	      transparent: true,
-	      // wireframe: true,
-	      opacity: 1,
-	      side: THREE.DoubleSide,
-	      color: color
-	    });
+			var basicMaterial = new THREE.MeshBasicMaterial({
+				transparent: true,
+				wireframe: true,
+				opacity: 1,
+				side: THREE.DoubleSide,
+				color: color
+			});
 
-	    var mesh = new THREE.Mesh(geo, material);
+			var mesh = new THREE.Mesh(geo, basicMaterial);
 
-	    // domEvents.addEventListener(mesh, 'click', function(event) {
-	    //   event.target.rotation.x += 0.1;
-	    //   event.target.rotation.y += 0.3;
-	    // }, false);
+			mesh.position.set(0, 0, 0);
+			mesh.rotation.set(0, 0, 0);
 
-	    mesh.position.set(Math.random()*7600 * (Math.round(Math.random())*2 - 1), -Math.random()*5500 * (Math.round(Math.random())*2 - 1), -Math.random()*200);
-	    mesh.rotation.set(1, 1, 0);
-	    scene.add(mesh);
+			// mesh.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
+			// mesh.rotation.set(1, 1, 0);
+			scene.add(mesh);
 
-	    tweenr.to(mesh.position, {
-	      z: 0,
-	      y: 0,
-	      x: 0,
-	      duration: Math.random()*1.5,
-	      delay: Math.random()*1.5
-	    });
-	    tweenr.to(mesh.rotation, {
-	      z: 0,
-	      y: 0,
-	      x: 0,
-	      duration: Math.random()*1.5,
-	      delay: Math.random()*1
-	    });
-	  }
+			domEvents.addEventListener(mesh, 'mouseover', function(event) {
+				// event.target.position.set(100,100,0);
+
+				tweenr.to(event.target.position, {
+					z: 0,
+					y: 0,
+					x: 0,
+					duration: Math.random()*1.5,
+					delay: Math.random()*1.5
+				});
+
+				tweenr.to(event.target.rotation, {
+					z: 0,
+					y: 0,
+					x: 0,
+					duration: Math.random()*1.5,
+					delay: Math.random()*1
+				});
+
+			}, false);
+
+			tweenr.to(mesh.position, {
+				z: 0,
+				y: 0,
+				x: 0,
+				duration: Math.random()*1.5,
+				delay: Math.random()*1.5
+			});
+
+			tweenr.to(mesh.rotation, {
+				z: 0,
+				y: 0,
+				x: 0,
+				duration: Math.random()*1.5,
+				delay: Math.random()*1.5
+			});
+
+		}
 	});
 }
 
 function debouce(func, wait, immediate){
-  var timeout;
+	var timeout;
 
-  return function() {
-    var context = this;
-    var args = arguments;
+	return function() {
+	var context = this;
+	var args = arguments;
 
-    var later = function() {
-      timeout = null;
+	var later = function() {
+		timeout = null;
 
-      if(!immediate) func.apple(context, args);
-    };
+		if(!immediate) func.apple(context, args);
+	};
 
-    var callNow = immediate && !timeout;
-    clearTimeout(timeout);
+	var callNow = immediate && !timeout;
+	clearTimeout(timeout);
 
-    timeout= setTimeout(later, wait);
-    if(callNow) func.apple(context, args);
-  };
+	timeout= setTimeout(later, wait);
+		if(callNow) func.apple(context, args);
+	};
 }
 
 function render() {
-  requestAnimationFrame(render);
-  renderer.render(scene, camera);
+	requestAnimationFrame(render);
+	renderer.render(scene, camera);
 }
 
 function renderOnce() {
-  renderer.render(scene, camera);
+	renderer.render(scene, camera);
 }
 
 var app = CanvasLoop(canvas, { scale: renderer.devicePixelRatio })
-    .start()
-    .on('resize', function() {
-      resize();
-    });
+	.start()
+	.on('resize', function() {
+		resize();
+	});
 
 function resize() {
-  var width = app.shape[0];
-  var height = app.shape[1];
-  camera.aspect = width / height;
-  renderer.setSize(width, height, false);
-  camera.updateProjectionMatrix();
-  renderOnce();
+	var width = app.shape[0];
+	var height = app.shape[1];
+	camera.aspect = width / height;
+	renderer.setSize(width, height, false);
+	camera.updateProjectionMatrix();
+	renderOnce();
 }
 
 render();
