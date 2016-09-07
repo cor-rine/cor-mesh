@@ -19,9 +19,9 @@ var tweenr = Tweenr({ defaultEase: 'expoOut' });
 
 initializeDomEvents(THREE, THREEx);
 
-camera.position.z = 500;
-camera.position.x = innerWidth / 3;
-camera.position.y = -innerHeight / 2;
+camera.position.z = 600;
+camera.position.x = innerWidth / 5;
+camera.position.y = -innerHeight / 3;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -127,7 +127,7 @@ function loadSVG() {
 	    //   event.target.rotation.y += 0.3;
 	    // }, false);
 
-	    mesh.position.set(Math.random()*60, -Math.random()*100, -Math.random()*2000);
+	    mesh.position.set(Math.random()*7600 * (Math.round(Math.random())*2 - 1), -Math.random()*5500 * (Math.round(Math.random())*2 - 1), -Math.random()*200);
 	    mesh.rotation.set(1, 1, 0);
 	    scene.add(mesh);
 
