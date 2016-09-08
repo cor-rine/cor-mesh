@@ -4,12 +4,13 @@ var THREE = require('three');
 var Complex = require('three-simplicial-complex')(THREE);
 var Tweenr = require('tweenr');
 var ajax = require('ajax-request');
+var OrbitControls = require('three-orbit-controls')(THREE);
 var CanvasLoop = require('canvas-loop');
 var initializeDomEvents = require('threex-domevents')
 var THREEx = {};
 
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 3000);
+var camera = new THREE.PerspectiveCamera(10, window.innerWidth / window.innerHeight, 0.1, 3000);
 var renderer = new THREE.WebGLRenderer({
   precision: 'lowp',
   antialias: true
@@ -22,6 +23,7 @@ initializeDomEvents(THREE, THREEx);
 camera.position.z = 600;
 camera.position.x = innerWidth / 5;
 camera.position.y = -innerHeight / 3;
+camera.lookAt(new THREE.Vector3());
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -29,6 +31,11 @@ document.body.appendChild(renderer.domElement);
 
 var canvas = document.querySelector('canvas');
 var domEvents = new THREEx.DomEvents(camera, renderer.domElement);
+
+var light = new THREE.DirectionalLight( 0xffffff, 0.5 );
+light.position.set(10,10,-1000);
+
+// var controls = new OrbitControls(camera);
 
 
 var vertexShader;
@@ -50,6 +57,8 @@ ajax({
 });
 
 var mousePosition = new THREE.Vector2();
+var mouseXOnMouseDown;
+var mouseYOnMouseDown;
 
 document.body.addEventListener('mousemove', function(event) {
 	// console.log(event.target);
@@ -59,6 +68,34 @@ document.body.addEventListener('mousemove', function(event) {
 	mousePosition.x = event.clientX;
 	mousePosition.y = event.clientY;
 }, false);
+
+
+function mouseDownEvent(event) {
+	document.addEventListener('mousemove', mouseMoveEvent, false);
+	mouseXOnMouseDown = event.clientX - window.innerWidth/2;
+	mouseYOnMouseDown = event.clientY - window.innerHeight/2;
+}
+
+function mouseUpEvent(event) {
+	document.removeEventListener('mousemove', mouseMoveEvent, false);
+}
+
+function mouseMoveEvent(event) {
+	console.log(camera);
+	mouseX = event.clientX - window.innerWidth/2;
+	mouseY = event.clientY - window.innerHeight/2;
+
+	// camera.rotation.x += ( mouseX - mouseXOnMouseDown ) * 0.0002;
+	// camera.rotation.y += ( mouseY - mouseYOnMouseDown ) * 0.002;
+
+	camera.position.x += ( mouseX - mouseXOnMouseDown ) * 0.2;
+	camera.position.y -= ( mouseY - mouseYOnMouseDown ) * 0.2;
+	camera.position.z += ( mouseY - mouseYOnMouseDown ) * 0.2;
+}
+
+document.addEventListener('mousedown', mouseDownEvent, false);
+document.addEventListener('mouseup', mouseUpEvent, false);
+
 
 // domEvents.addEventListener(mesh, 'mouseout', function(event) {
 //   event.target.material.opacity = 1;
@@ -86,6 +123,8 @@ function loadSVG() {
 				geo.vertices.push(new THREE.Vector3(numbers.shift(), -numbers.shift(), 0));
 			}
 			geo.faces.push(new THREE.Face3(0, 2, 1));
+
+			// var shape = new THREE.Shape(geo);
 
 			var sampleColor = new THREE.Color(color);
 
@@ -125,22 +164,21 @@ function loadSVG() {
 
 			domEvents.addEventListener(mesh, 'mouseover', function(event) {
 				// event.target.position.set(100,100,0);
+				// tweenr.to(event.target.position, {
+				// 	z: 0,
+				// 	y: 0,
+				// 	x: 0,
+				// 	duration: Math.random()*1.5,
+				// 	delay: Math.random()*1.5
+				// });
 
-				tweenr.to(event.target.position, {
-					z: 0,
-					y: 0,
-					x: 0,
-					duration: Math.random()*1.5,
-					delay: Math.random()*1.5
-				});
-
-				tweenr.to(event.target.rotation, {
-					z: 0,
-					y: 0,
-					x: 0,
-					duration: Math.random()*1.5,
-					delay: Math.random()*1
-				});
+				// tweenr.to(event.target.rotation, {
+				// 	z: 0,
+				// 	y: 0,
+				// 	x: 0,
+				// 	duration: Math.random()*1.5,
+				// 	delay: Math.random()*1
+				// });
 
 			}, false);
 
