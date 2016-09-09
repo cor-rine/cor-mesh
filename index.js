@@ -60,6 +60,10 @@ var cameraPositionInitX = camera.position.x;
 var cameraPositionInitY = camera.position.y;
 
 
+function getRandomIntBetween(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function mouseMoveEvent(event) {
 	mouseX = event.clientX - window.innerWidth/2;
 	mouseY = event.clientY - window.innerHeight/2;
@@ -143,13 +147,13 @@ function loadSVG() {
 
 			// Add the clone meshes to the scene for effect
 			wire.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
-			wire.rotation.set(0, 0, 0);
+			wire.rotation.set(0, 1/getRandomIntBetween(2000, 3000), 1/getRandomIntBetween(2000, 3000));
 			wire.material = basicMaterial;
 			scene.add(wire);
 			wires.push(wire);
 
 			wire2.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
-			wire2.rotation.set(0, 0, 0);
+			wire2.rotation.set(0, 1/getRandomIntBetween(2000, 3000), 1/getRandomIntBetween(2000, 3000));
 			wire2.material = basicMaterial;
 			scene.add(wire2);
 			wires.push(wire2);
@@ -179,14 +183,17 @@ function debouce(func, wait, immediate){
 	};
 }
 
-function getRandomIntBetween(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 function rotateWires() {
 	for (var i = 0; i < wires.length; i++) {
-		wires[i].rotation.y += 1/getRandomIntBetween(2000, 3000);
-		wires[i].rotation.z += 1/getRandomIntBetween(1000, 2000);;
+
+		// different direction if odd/even
+		if (i % 2) {
+			wires[i].rotation.y += 1/getRandomIntBetween(2000, 3000);
+			wires[i].rotation.z += 1/getRandomIntBetween(1000, 2000);
+		} else {
+			wires[i].rotation.y -= 1/getRandomIntBetween(2000, 3000);
+			wires[i].rotation.z -= 1/getRandomIntBetween(1000, 2000);
+		}
 	}
 }
 
