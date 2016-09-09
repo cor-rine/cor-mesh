@@ -72,6 +72,10 @@ function mouseMoveEvent(event) {
 }
 
 document.addEventListener('mousemove', mouseMoveEvent, false);
+document.addEventListener('click', animateClick, false);
+
+var wires = [];
+var meshes = [];
 
 
 function loadSVG() {
@@ -125,7 +129,7 @@ function loadSVG() {
 			});
 
 			var mesh = new THREE.Mesh(geo, material);
-			var mesh2 = mesh.clone();
+			var wire = mesh.clone();
 
 			// mesh.position.set(0, 0, 0);
 			// mesh.rotation.set(0, 0, 0);
@@ -134,32 +138,14 @@ function loadSVG() {
 			mesh.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
 			mesh.rotation.set(1, 1, 0);
 			scene.add(mesh);
+			meshes.push(mesh);
 
-			// Add the clone meshes to the scene
-			mesh2.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
-			mesh2.rotation.set(0, 0, 0);
-			mesh2.material = basicMaterial;
-			scene.add(mesh2);
-
-			document.body.addEventListener('click', animateClick, false);
-
-			function animateClick() {
-				tweenr.to(mesh.position, {
-					z: 0,
-					y: 0,
-					x: 0,
-					duration: Math.random()*1.5,
-					delay: Math.random()*1.5
-				});
-
-				tweenr.to(mesh.rotation, {
-					z: 0,
-					y: 0,
-					x: 0,
-					duration: Math.random()*1.5,
-					delay: Math.random()*1.5
-				});
-			}
+			// Add the clone meshes to the scene for effect
+			wire.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
+			wire.rotation.set(0, 0, 0);
+			wire.material = basicMaterial;
+			scene.add(wire);
+			wires.push(wire);
 
 		}
 	});
@@ -186,9 +172,42 @@ function debouce(func, wait, immediate){
 	};
 }
 
+function getRandomIntBetween(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function rotateWires() {
+	for (var i = 0; i < wires.length; i++) {
+		wires[i].rotation.y += 1/getRandomIntBetween(2000, 3000);
+		wires[i].rotation.z += 1/getRandomIntBetween(1000, 2000);;
+	}
+}
+
+function animateClick() {
+	for (var i = 0; i < meshes.length; i++) {
+		tweenr.to(meshes[i].position, {
+			z: 0,
+			y: 0,
+			x: 0,
+			duration: getRandomIntBetween(1, 4),
+			delay: Math.random()*1.5
+		});
+
+		tweenr.to(meshes[i].rotation, {
+			z: 0,
+			y: 0,
+			x: 0,
+			duration: getRandomIntBetween(1, 2),
+			delay: Math.random()*1.5
+		});
+	}
+}
+
 function render() {
 	requestAnimationFrame(render);
 	renderer.render(scene, camera);
+
+	rotateWires();
 }
 
 function renderOnce() {
