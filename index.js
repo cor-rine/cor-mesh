@@ -54,6 +54,11 @@ var mousePosition = new THREE.Vector2();
 var mouseXOnMouseDown;
 var mouseYOnMouseDown;
 
+var cameraRotationInitX = camera.rotation.x;
+var cameraRotationInitY = camera.rotation.y;
+var cameraPositionInitX = camera.position.x;
+var cameraPositionInitY = camera.position.y;
+
 document.body.addEventListener('mousemove', function(event) {
 	// console.log(event.target);
 	// event.target.material.currentColor = event.target.material.color;
@@ -78,11 +83,11 @@ function mouseMoveEvent(event) {
 	mouseX = event.clientX - window.innerWidth/2;
 	mouseY = event.clientY - window.innerHeight/2;
 
-	camera.rotation.y += mouseX * 1/100000;
-	camera.rotation.x -= mouseY * 1/100000;
+	camera.rotation.x = cameraRotationInitX - mouseY * 1/2500;
+	camera.rotation.y = cameraRotationInitY + mouseX * 1/5000;
 
-	camera.position.x += mouseX * 0.005;
-	camera.position.y -= mouseY * 0.005;
+	camera.position.x = cameraPositionInitX + mouseX * 1/10;
+	camera.position.y = cameraPositionInitY - mouseY * 1/7;
 }
 
 // document.addEventListener('mousedown', mouseDownEvent, false);
