@@ -59,25 +59,6 @@ var cameraRotationInitY = camera.rotation.y;
 var cameraPositionInitX = camera.position.x;
 var cameraPositionInitY = camera.position.y;
 
-document.body.addEventListener('mousemove', function(event) {
-	// console.log(event.target);
-	// event.target.material.currentColor = event.target.material.color;
-	// event.target.material.color = new THREE.Color(40, 5, 0);
-	// event.target.material.opacity = 0.4;
-	mousePosition.x = event.clientX;
-	mousePosition.y = event.clientY;
-}, false);
-
-
-function mouseDownEvent(event) {
-	document.addEventListener('mousemove', mouseMoveEvent, false);
-	mouseXOnMouseDown = event.clientX - window.innerWidth/2;
-	mouseYOnMouseDown = event.clientY - window.innerHeight/2;
-}
-
-function mouseUpEvent(event) {
-	document.removeEventListener('mousemove', mouseMoveEvent, false);
-}
 
 function mouseMoveEvent(event) {
 	mouseX = event.clientX - window.innerWidth/2;
@@ -90,15 +71,7 @@ function mouseMoveEvent(event) {
 	camera.position.y = cameraPositionInitY - mouseY * 1/7;
 }
 
-// document.addEventListener('mousedown', mouseDownEvent, false);
-// document.addEventListener('mouseup', mouseUpEvent, false);
 document.addEventListener('mousemove', mouseMoveEvent, false);
-
-
-// domEvents.addEventListener(mesh, 'mouseout', function(event) {
-//   event.target.material.opacity = 1;
-//   event.target.material.color = event.target.material.currentColor;
-// }, false);
 
 
 function loadSVG() {
