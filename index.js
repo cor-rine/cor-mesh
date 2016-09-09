@@ -130,6 +130,7 @@ function loadSVG() {
 
 			var mesh = new THREE.Mesh(geo, material);
 			var wire = mesh.clone();
+			var wire2 = wire.clone();
 
 			// mesh.position.set(0, 0, 0);
 			// mesh.rotation.set(0, 0, 0);
@@ -146,6 +147,12 @@ function loadSVG() {
 			wire.material = basicMaterial;
 			scene.add(wire);
 			wires.push(wire);
+
+			wire2.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
+			wire2.rotation.set(0, 0, 0);
+			wire2.material = basicMaterial;
+			scene.add(wire2);
+			wires.push(wire2);
 
 		}
 	});
