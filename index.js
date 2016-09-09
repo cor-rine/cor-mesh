@@ -4,13 +4,12 @@ var THREE = require('three');
 var Complex = require('three-simplicial-complex')(THREE);
 var Tweenr = require('tweenr');
 var ajax = require('ajax-request');
-var OrbitControls = require('three-orbit-controls')(THREE);
 var CanvasLoop = require('canvas-loop');
 var initializeDomEvents = require('threex-domevents')
 var THREEx = {};
 
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(10, window.innerWidth / window.innerHeight, 0.1, 3000);
+var camera = new THREE.PerspectiveCamera(800, window.innerWidth / window.innerHeight, 0.1, 3000);
 var renderer = new THREE.WebGLRenderer({
   precision: 'lowp',
   antialias: true
@@ -23,7 +22,7 @@ initializeDomEvents(THREE, THREEx);
 camera.position.z = 600;
 camera.position.x = innerWidth / 5;
 camera.position.y = -innerHeight / 3;
-camera.lookAt(new THREE.Vector3());
+camera.lookAt(new THREE.Vector3(500,-600,0));
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -31,11 +30,6 @@ document.body.appendChild(renderer.domElement);
 
 var canvas = document.querySelector('canvas');
 var domEvents = new THREEx.DomEvents(camera, renderer.domElement);
-
-var light = new THREE.DirectionalLight( 0xffffff, 0.5 );
-light.position.set(10,10,-1000);
-
-// var controls = new OrbitControls(camera);
 
 
 var vertexShader;
@@ -81,20 +75,19 @@ function mouseUpEvent(event) {
 }
 
 function mouseMoveEvent(event) {
-	console.log(camera);
 	mouseX = event.clientX - window.innerWidth/2;
 	mouseY = event.clientY - window.innerHeight/2;
 
-	// camera.rotation.x += ( mouseX - mouseXOnMouseDown ) * 0.0002;
-	// camera.rotation.y += ( mouseY - mouseYOnMouseDown ) * 0.002;
+	camera.rotation.y += mouseX * 1/100000;
+	camera.rotation.x -= mouseY * 1/100000;
 
-	camera.position.x += ( mouseX - mouseXOnMouseDown ) * 0.2;
-	camera.position.y -= ( mouseY - mouseYOnMouseDown ) * 0.2;
-	camera.position.z += ( mouseY - mouseYOnMouseDown ) * 0.2;
+	camera.position.x += mouseX * 0.005;
+	camera.position.y -= mouseY * 0.005;
 }
 
-document.addEventListener('mousedown', mouseDownEvent, false);
-document.addEventListener('mouseup', mouseUpEvent, false);
+// document.addEventListener('mousedown', mouseDownEvent, false);
+// document.addEventListener('mouseup', mouseUpEvent, false);
+document.addEventListener('mousemove', mouseMoveEvent, false);
 
 
 // domEvents.addEventListener(mesh, 'mouseout', function(event) {
