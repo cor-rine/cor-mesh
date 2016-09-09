@@ -141,21 +141,25 @@ function loadSVG() {
 			mesh2.material = basicMaterial;
 			scene.add(mesh2);
 
-			// tweenr.to(mesh.position, {
-			// 	z: 0,
-			// 	y: 0,
-			// 	x: 0,
-			// 	duration: Math.random()*1.5,
-			// 	delay: Math.random()*1.5
-			// });
+			document.body.addEventListener('click', animateClick, false);
 
-			// tweenr.to(mesh.rotation, {
-			// 	z: 0,
-			// 	y: 0,
-			// 	x: 0,
-			// 	duration: Math.random()*1.5,
-			// 	delay: Math.random()*1.5
-			// });
+			function animateClick() {
+				tweenr.to(mesh.position, {
+					z: 0,
+					y: 0,
+					x: 0,
+					duration: Math.random()*1.5,
+					delay: Math.random()*1.5
+				});
+
+				tweenr.to(mesh.rotation, {
+					z: 0,
+					y: 0,
+					x: 0,
+					duration: Math.random()*1.5,
+					delay: Math.random()*1.5
+				});
+			}
 
 		}
 	});
