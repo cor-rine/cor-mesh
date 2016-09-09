@@ -125,49 +125,37 @@ function loadSVG() {
 			});
 
 			var mesh = new THREE.Mesh(geo, material);
+			var mesh2 = mesh.clone();
 
 			// mesh.position.set(0, 0, 0);
 			// mesh.rotation.set(0, 0, 0);
 
+			// Add the first mesh to the scene
 			mesh.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
 			mesh.rotation.set(1, 1, 0);
 			scene.add(mesh);
 
-			domEvents.addEventListener(mesh, 'mouseover', function(event) {
-				// event.target.position.set(100,100,0);
-				// tweenr.to(event.target.position, {
-				// 	z: 0,
-				// 	y: 0,
-				// 	x: 0,
-				// 	duration: Math.random()*1.5,
-				// 	delay: Math.random()*1.5
-				// });
+			// Add the clone meshes to the scene
+			mesh2.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
+			mesh2.rotation.set(1, 1, 0);
+			mesh2.material = basicMaterial;
+			scene.add(mesh2);
 
-				// tweenr.to(event.target.rotation, {
-				// 	z: 0,
-				// 	y: 0,
-				// 	x: 0,
-				// 	duration: Math.random()*1.5,
-				// 	delay: Math.random()*1
-				// });
+			// tweenr.to(mesh.position, {
+			// 	z: 0,
+			// 	y: 0,
+			// 	x: 0,
+			// 	duration: Math.random()*1.5,
+			// 	delay: Math.random()*1.5
+			// });
 
-			}, false);
-
-			tweenr.to(mesh.position, {
-				z: 0,
-				y: 0,
-				x: 0,
-				duration: Math.random()*1.5,
-				delay: Math.random()*1.5
-			});
-
-			tweenr.to(mesh.rotation, {
-				z: 0,
-				y: 0,
-				x: 0,
-				duration: Math.random()*1.5,
-				delay: Math.random()*1.5
-			});
+			// tweenr.to(mesh.rotation, {
+			// 	z: 0,
+			// 	y: 0,
+			// 	x: 0,
+			// 	duration: Math.random()*1.5,
+			// 	delay: Math.random()*1.5
+			// });
 
 		}
 	});
