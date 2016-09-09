@@ -137,7 +137,7 @@ function loadSVG() {
 
 			// Add the clone meshes to the scene
 			mesh2.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
-			mesh2.rotation.set(1, 1, 0);
+			mesh2.rotation.set(0, 0, 0);
 			mesh2.material = basicMaterial;
 			scene.add(mesh2);
 
