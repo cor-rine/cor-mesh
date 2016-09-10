@@ -185,7 +185,6 @@ function debouce(func, wait, immediate){
 
 function rotateWires() {
 	for (var i = 0; i < wires.length; i++) {
-
 		// different direction if odd/even
 		if (i % 2) {
 			wires[i].rotation.y += 1/getRandomIntBetween(2000, 3000);
@@ -193,6 +192,21 @@ function rotateWires() {
 		} else {
 			wires[i].rotation.y -= 1/getRandomIntBetween(2000, 3000);
 			wires[i].rotation.z -= 1/getRandomIntBetween(1000, 2000);
+		}
+	}
+}
+
+function rotateMeshes() {
+	if (faceIsExploded) {
+		for (var i = 0; i < meshes.length; i++) {
+			// different direction if odd/even
+			if (i % 2) {
+				meshes[i].rotation.y += 1/getRandomIntBetween(2000, 3000);
+				meshes[i].rotation.z += 1/getRandomIntBetween(1000, 2000);
+			} else {
+				meshes[i].rotation.y -= 1/getRandomIntBetween(2000, 3000);
+				meshes[i].rotation.z -= 1/getRandomIntBetween(1000, 2000);
+			}
 		}
 	}
 }
@@ -245,6 +259,7 @@ function render() {
 	renderer.render(scene, camera);
 
 	rotateWires();
+	rotateMeshes();
 }
 
 function renderOnce() {
