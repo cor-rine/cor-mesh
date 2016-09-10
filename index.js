@@ -187,11 +187,11 @@ function rotateWires() {
 	for (var i = 0; i < wires.length; i++) {
 		// different direction if odd/even
 		if (i % 2) {
-			wires[i].rotation.y += 1/getRandomIntBetween(2000, 3000);
-			wires[i].rotation.z += 1/getRandomIntBetween(1000, 2000);
+			wires[i].rotation.y += 1/getRandomIntBetween(3000, 5000);
+			wires[i].rotation.z += 1/getRandomIntBetween(5000, 6000);
 		} else {
 			wires[i].rotation.y -= 1/getRandomIntBetween(2000, 3000);
-			wires[i].rotation.z -= 1/getRandomIntBetween(1000, 2000);
+			wires[i].rotation.z -= 1/getRandomIntBetween(3000, 4000);
 		}
 	}
 }
@@ -202,7 +202,7 @@ function rotateMeshes() {
 			// different direction if odd/even
 			if (i % 2) {
 				meshes[i].rotation.y += 1/getRandomIntBetween(2000, 3000);
-				meshes[i].rotation.z += 1/getRandomIntBetween(1000, 2000);
+				meshes[i].rotation.z += 1/getRandomIntBetween(2000, 3000);
 			} else {
 				meshes[i].rotation.y -= 1/getRandomIntBetween(2000, 3000);
 				meshes[i].rotation.z -= 1/getRandomIntBetween(1000, 2000);
