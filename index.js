@@ -31,9 +31,21 @@ document.body.appendChild(renderer.domElement);
 var canvas = document.querySelector('canvas');
 var domEvents = new THREEx.DomEvents(camera, renderer.domElement);
 
-
 var vertexShader;
 var fragShader;
+
+var mousePosition = new THREE.Vector2();
+var mouseXOnMouseDown;
+var mouseYOnMouseDown;
+
+var cameraRotationInitX = camera.rotation.x;
+var cameraRotationInitY = camera.rotation.y;
+var cameraPositionInitX = camera.position.x;
+var cameraPositionInitY = camera.position.y;
+
+var wires = [];
+var meshes = [];
+var faceIsExploded = true;
 
 ajax({
 	url: '/glsl/frag.frag',
@@ -49,15 +61,6 @@ ajax({
 	vertexShader = body;
 	loadSVG();
 });
-
-var mousePosition = new THREE.Vector2();
-var mouseXOnMouseDown;
-var mouseYOnMouseDown;
-
-var cameraRotationInitX = camera.rotation.x;
-var cameraRotationInitY = camera.rotation.y;
-var cameraPositionInitX = camera.position.x;
-var cameraPositionInitY = camera.position.y;
 
 
 function getRandomIntBetween(min, max) {
@@ -77,9 +80,6 @@ function mouseMoveEvent(event) {
 
 document.addEventListener('mousemove', mouseMoveEvent, false);
 document.addEventListener('click', animateClick, false);
-
-var wires = [];
-var meshes = [];
 
 
 function loadSVG() {
@@ -198,22 +198,45 @@ function rotateWires() {
 }
 
 function animateClick() {
-	for (var i = 0; i < meshes.length; i++) {
-		tweenr.to(meshes[i].position, {
-			z: 0,
-			y: 0,
-			x: 0,
-			duration: getRandomIntBetween(1, 4),
-			delay: Math.random()*1.5
-		});
 
-		tweenr.to(meshes[i].rotation, {
-			z: 0,
-			y: 0,
-			x: 0,
-			duration: getRandomIntBetween(1, 2),
-			delay: Math.random()*1.5
-		});
+	if (faceIsExploded) {
+		for (var i = 0; i < meshes.length; i++) {
+			tweenr.to(meshes[i].position, {
+				x: 0,
+				y: 0,
+				z: 0,
+				duration: getRandomIntBetween(1, 4),
+				delay: Math.random()*1.5
+			});
+
+			tweenr.to(meshes[i].rotation, {
+				x: 0,
+				y: 0,
+				z: 0,
+				duration: getRandomIntBetween(1, 2),
+				delay: Math.random()*1.5
+			});
+		}
+		faceIsExploded = false;
+	} else {
+		for (var i = 0; i < meshes.length; i++) {
+			tweenr.to(meshes[i].position, {
+				x: Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1),
+				y: -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1),
+				z: -Math.random()*200,
+				duration: getRandomIntBetween(1, 4),
+				delay: Math.random()*1.5
+			});
+
+			tweenr.to(meshes[i].rotation, {
+				x: 1,
+				y: 1,
+				z: 0,
+				duration: getRandomIntBetween(1, 2),
+				delay: Math.random()*1.5
+			});
+		}
+		faceIsExploded = true;
 	}
 }
 
