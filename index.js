@@ -79,7 +79,7 @@ function mouseMoveEvent(event) {
 }
 
 document.addEventListener('mousemove', mouseMoveEvent, false);
-document.addEventListener('click', animateClick, false);
+document.addEventListener('click', explodeFace, false);
 
 
 function loadSVG() {
@@ -140,19 +140,19 @@ function loadSVG() {
 			// mesh.rotation.set(0, 0, 0);
 
 			// Add the first mesh to the scene
-			mesh.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
+			mesh.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), Math.random()*200 * (Math.round(Math.random())*2 - 1));
 			mesh.rotation.set(1, 1, 0);
 			scene.add(mesh);
 			meshes.push(mesh);
 
 			// Add the clone meshes to the scene for effect
-			wire.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
+			wire.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), Math.random()*200 * (Math.round(Math.random())*2 - 1));
 			wire.rotation.set(0, 1/getRandomIntBetween(2000, 3000), 1/getRandomIntBetween(2000, 3000));
 			wire.material = basicMaterial;
 			scene.add(wire);
 			wires.push(wire);
 
-			wire2.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), -Math.random()*200);
+			wire2.position.set(Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1), -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1), Math.random()*200 * (Math.round(Math.random())*2 - 1));
 			wire2.rotation.set(0, 1/getRandomIntBetween(2000, 3000), 1/getRandomIntBetween(2000, 3000));
 			wire2.material = basicMaterial;
 			scene.add(wire2);
@@ -211,7 +211,7 @@ function rotateMeshes() {
 	}
 }
 
-function animateClick() {
+function explodeFace() {
 
 	if (faceIsExploded) {
 		for (var i = 0; i < meshes.length; i++) {
@@ -237,7 +237,7 @@ function animateClick() {
 			tweenr.to(meshes[i].position, {
 				x: Math.random()*window.innerWidth * (Math.round(Math.random())*2 - 1),
 				y: -Math.random()*window.innerHeight * (Math.round(Math.random())*2 - 1),
-				z: -Math.random()*200,
+				z: Math.random()*200 * (Math.round(Math.random())*2 - 1),
 				duration: getRandomIntBetween(1, 4),
 				delay: Math.random()*1.5
 			});
