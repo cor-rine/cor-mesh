@@ -162,27 +162,6 @@ function loadSVG() {
 	});
 }
 
-function debouce(func, wait, immediate){
-	var timeout;
-
-	return function() {
-	var context = this;
-	var args = arguments;
-
-	var later = function() {
-		timeout = null;
-
-		if(!immediate) func.apple(context, args);
-	};
-
-	var callNow = immediate && !timeout;
-	clearTimeout(timeout);
-
-	timeout= setTimeout(later, wait);
-		if(callNow) func.apple(context, args);
-	};
-}
-
 function rotateWires() {
 	for (var i = 0; i < wires.length; i++) {
 		// different direction if odd/even
